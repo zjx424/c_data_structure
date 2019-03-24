@@ -1,0 +1,17 @@
+#define MAXSIZE 1000
+typedef int ElemType
+typedef struct 
+{
+	ElemType data;
+	int cur;
+}Component,staticLinkList[MAXSIZE];
+
+
+
+
+int main(int argc, char const *argv[])
+{
+	
+	return 0;
+}
+
