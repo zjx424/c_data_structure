@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #define MAXSIZE 1000
 #define ERROR 0
 #define OK 1
@@ -35,6 +37,12 @@ int Malloc_SLL(staticLinkList space)
 	}
 	return i;
 }
+void Free_SSL(staticLinkList space, int j) 
+{  
+    space[j].cur = space[0].cur;    
+    space[0].cur = j;               
+}
+
 int ListLength(staticLinkList L)
 {
 	int j=0;
@@ -69,20 +77,73 @@ Status ListInsert(staticLinkList L,int i,ElemType e)
 	return ERROR;
 }
 
+Status ListDelete(staticLinkList L, int i)   
+{ 
+    int j, k;   
+    if (i < 1 || i > ListLength(L))   
+        return ERROR;   
+    k = MAXSIZE - 1;   
+    for (j = 1; j <= i - 1; j++)   
+        k = L[k].cur;  
+
+    j = L[k].cur;   
+    L[k].cur = L[j].cur;   
+    Free_SSL(L, j);   
+    return OK;   
+} 
 
 
+void Print_data(staticLinkList L)
+{
+	printf("开始打印。。。\n");
+	for (int i = 1; i <=ListLength(L); ++i)
+	{
+		printf("L[%d].data == %d\n",i,L[i].data);
+		printf("L[%d].cur == %d\n",i,L[i].cur);
+		printf("\n");
+
+	}
+}
+
+
+
+void Print_Sorted_data(staticLinkList L)
+{
+	printf("开始打印data。。。\n");
+	int first_cur=L[MAXSIZE-1].cur;
+	for (int i = 1; i < ListLength(L); ++i)
+	{
+		int data=L[first_cur].data;
+		first_cur=L[first_cur].cur;
+		printf("%d\t",data );
+	}
+
+}
 
 
 int main(int argc, char const *argv[])
 {
 	staticLinkList l1;
 
-	InitList(l1);
-	ElemType e0=100;
-	ListInsert(l1,1,e0);
-	
+	srand(time(0));
 
-	printf("%d\n", l1[1].data);
+	InitList(l1);
+
+	ElemType e0;
+	for (int i = 1; i <=13; ++i)
+	{
+		e0=rand()%100+1;
+		printf("随机生成的数是：%d\n",e0 );
+		ListInsert(l1,i,e0);
+	}
+	printf("长度为%d\n",ListLength(l1) );
+	Print_Sorted_data(l1);
+
+
+	ListDelete(l1,1);
+	ListDelete(l1,5);
+	
+	Print_Sorted_data(l1);
 	return 0;
 }
 
