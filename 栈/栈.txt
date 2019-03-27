@@ -1,0 +1,24 @@
+
+栈（stack）是一个后进先出（Last IN First OUT）的线性表，只允许在尾部进行删除和插入
+
+
+3个元素就有5种出栈次序,如果数量多,其出栈的变化将会更多
+
+
+push 入栈 压入
+pop  出栈 弹出
+
+ADT 栈(stack)
+Data 同线性表,元素具有相同的类型,相邻元素具有前驱和后继关系
+
+Operation 
+InitStack(*S) 初始化操作
+DestroyStack(*S) 若栈存在则销毁
+ClearStack(*S) 将栈清空
+StackEmpty(S) 若栈为空返回True,否则返回False
+GetTop(S,*e) 若栈存在且非空,用e返回S的栈顶元素
+Push(*S,e) 若栈存在,插入新元素e到栈S中并成为栈顶元素
+
+Pop(*S,*e) 删除栈S中栈顶元素,并用e返回其值
+StackLength(S) 返回栈S的元素个数
+

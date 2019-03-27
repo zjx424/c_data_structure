@@ -64,7 +64,8 @@ void CreateListTail(LinkList *L,int n)
 	LinkList new_node,last_node;
 	*L=(LinkList)malloc(sizeof(Node));//创建需要
 	last_node=*L;
-	for (int i = 0; i < n; ++i)
+	int i;
+	for (i = 0; i < n; ++i)
 	{
 		new_node=(LinkList)malloc(sizeof(Node));
 		new_node->data=rand()%100+1;
