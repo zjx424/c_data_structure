@@ -51,7 +51,7 @@ void Magician(linklist head)
 			if (p->data!=0)
 			{
 				p->next;//跳过有值的位置?存疑
-				j--;
+				j--;//j需要返回原来的值
 			}
 		}
 		if (p->data==0)

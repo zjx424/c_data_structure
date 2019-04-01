@@ -10,7 +10,7 @@ typedef struct node
 }sqlist,*linklist;
 
 
-linklist CreateLinkList()//创建了一个data全为0的循环链表
+linklist CreateLinkList()
 {
 	linklist head=NULL;
 	linklist s,r;
