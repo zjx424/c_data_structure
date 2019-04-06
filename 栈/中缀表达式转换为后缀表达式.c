@@ -1,11 +1,16 @@
+//  1+(2-3)*4+10/5
+//  
+//  1 2 3 - 4 * + 10 5 / +
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <ctype.h>
+
 
 #define STACK_INIT_SIZE 20 //20位
-#define STACKINCREMENT 10 
+#define STACKINCREMENT 10  
+#define MAXBUFFER 10
 
-typedef char ElemType;
+typedef double ElemType;
 typedef struct 
 {
 	ElemType *base;
@@ -34,6 +39,8 @@ void Push(sqStack *s,ElemType e)
 		{
 			exit(0);
 		}
+		s->top=s->base+s->stackSize;
+		s->stackSize=s->stackSize+STACKINCREMENT;
 	}
 	*(s->top)=e;
 	s->top++;
@@ -55,29 +62,61 @@ int StackLen(sqStack s)
 	return(s.top-s.base);
 }
 
-int main(int argc, char const *argv[])
+
+int main()
 {
-	ElemType c;
 	sqStack s;
-	int len,i,sum=0;
+	char c,e;
 	InitStack(&s);
-	printf("请输入二进制数,输入#符号表示结束:");
+	printf("请输入中缀表达式,以#作为结束标志:");
 	scanf("%c",&c);
 	while(c!='#')
 	{
-		Push(&s,c);
+		if (c>='0'&&c<='9')
+		{
+			printf("%c\n",c );
+		}
+		else if (')' == c)
+		{
+			Pop(&s,&e);
+			while('('!=e)
+			{
+				printf("%c",e );
+				Pop(&s,&e);
+			}
+		}
+		else if ('+'==c||'-'==c)
+		{
+			if (!StackLen(s))
+			{
+				Push(&s,c);
+			}
+			else
+			{
+				do
+				{
+					Pop(&s,&e);
+					if ('('==e)
+					{
+						Push(&s,e);
+					}
+					else
+					{
+						printf("%c",e );
+					}
+				}while(StackLen(s)&&'('!=e);
+				Push(&s,c);
+			}
+		}
+		else if ('*'==c||'/'==c||'('==c)
+		{
+			Push(&s,c);
+		}
+		else
+		{
+			printf("用户输入错误!\n");
+			return -1;
+		}
 		scanf("%c",&c);
 	}
-	getchar();//把'\n'从缓冲区去掉
-
-	len=StackLen(s);
-
-	printf("栈的当前容量是%d\n",len );
-	for (i = 0; i < len ; ++i)
-	{
-		Pop(&s,&c);
-		sum=sum+(c-48)*pow(2,i);//转assci码  
-	}
-	printf("sum  == %d\n",sum );
-	return 0;
 }
